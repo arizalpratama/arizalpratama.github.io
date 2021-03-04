@@ -123,51 +123,51 @@ workbox.routing.registerRoute(
 // const base_url2 = 'https://upload.wikimedia.org/wikipedia'
 
 // Install
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll(urlToCache)
-        })
-    )
-})
+// self.addEventListener('install', event => {
+//     event.waitUntil(
+//         caches.open(CACHE_NAME).then(cache => {
+//             return cache.addAll(urlToCache)
+//         })
+//     )
+// })
 
-// Fetch
-self.addEventListener('fetch', event => {
-    if (event.request.url.indexOf(base_url) > -1 || event.request.url.indexOf(base_url2) > -1) {
-        event.respondWith(
-            (async () => {
-                const cache = await caches.open(CACHE_NAME)
-                const res = await fetch(event.request)
-                cache.put(event.request.url, res.clone())
-                return res
-            })()
-        )
-    } else {
-        event.respondWith(
-            (async () => {
-                return await caches.match(event.request.url, {
-                    ignoreSearch: true
-                }) || await fetch(event.request)
-            })()
-        )
-    }
-})
+// // Fetch
+// self.addEventListener('fetch', event => {
+//     if (event.request.url.indexOf(base_url) > -1 || event.request.url.indexOf(base_url2) > -1) {
+//         event.respondWith(
+//             (async () => {
+//                 const cache = await caches.open(CACHE_NAME)
+//                 const res = await fetch(event.request)
+//                 cache.put(event.request.url, res.clone())
+//                 return res
+//             })()
+//         )
+//     } else {
+//         event.respondWith(
+//             (async () => {
+//                 return await caches.match(event.request.url, {
+//                     ignoreSearch: true
+//                 }) || await fetch(event.request)
+//             })()
+//         )
+//     }
+// })
 
-// Delete
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then( cacheNames => {
-            return Promise.all(
-                cacheNames.map( cacheName => {
-                    if (cacheName !== CACHE_NAME) {
-                        console.log('cache '+cacheName+' dihapus')
-                        return caches.delete(cacheName)
-                    }
-                })
-            )
-        })
-    )
-})
+// // Delete
+// self.addEventListener('activate', event => {
+//     event.waitUntil(
+//         caches.keys().then( cacheNames => {
+//             return Promise.all(
+//                 cacheNames.map( cacheName => {
+//                     if (cacheName !== CACHE_NAME) {
+//                         console.log('cache '+cacheName+' dihapus')
+//                         return caches.delete(cacheName)
+//                     }
+//                 })
+//             )
+//         })
+//     )
+// })
 
 // Push notification
 self.addEventListener('push', event => {
